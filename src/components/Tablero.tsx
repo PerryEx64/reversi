@@ -42,9 +42,9 @@ export const TableroScreen = () => {
         const generarAleatoriamente = generarNumeroAleatorio(
           movimientos.length - 1
         );
-       const valorMasBajo: SpotMaquina = obtenerValorMasBajo(movimientos);
+        const valorMasBajo: SpotMaquina = obtenerValorMasBajo(movimientos);
 
-        const result = movimientos[generarAleatoriamente]; 
+        const result = movimientos[generarAleatoriamente];
 
         Turno(
           movimientos[generarAleatoriamente].row,
