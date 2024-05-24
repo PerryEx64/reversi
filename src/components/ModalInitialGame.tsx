@@ -8,11 +8,10 @@ interface IModal {
 }
 
 export const ModalInitialGame = (props: IModal) => {
-  const { setSizeTablero, setDificultad, setName, name } = useContext(MainContext);
+  const { setSizeTablero, setDificultad, setName } = useContext(MainContext);
   const navigate = useNavigate();
   const { id } = props;
 
-  console.log(name)
   return (
     <div className="flex justify-center mt-3">
       <button

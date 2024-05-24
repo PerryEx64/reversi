@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 export const CardIniciales = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-center gap-16 items-center ml-auto mr-auto w-full">
       <div className="card w-96 bg-base-100 shadow-xl image-full">
@@ -16,7 +19,7 @@ export const CardIniciales = () => {
           <div className="card-actions justify-end">
             <a
               className="btn btn-primary btn-md font-prosto-one"
-              href="/reglasYconsejos"
+              onClick={() => navigate('/reglasConsejos')}
             >
               Ir
             </a>
@@ -37,7 +40,7 @@ export const CardIniciales = () => {
           <div className="card-actions justify-end">
             <a
               className="btn btn-primary btn-md font-prosto-one"
-              href="/curiosidades"
+              onClick={() => navigate('/curiosidades')}
             >
               ir
             </a>

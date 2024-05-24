@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/caveat": "^5.0.18",
+    "@fontsource-variable/platypi": "^5.0.2",
+    "@fontsource/caveat": "^5.0.18",
+    "@fontsource/press-start-2p": "^5.0.20",
+    "@fontsource/prosto-one": "^5.0.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "sweetalert2": "^11.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

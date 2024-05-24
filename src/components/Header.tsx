@@ -6,7 +6,7 @@ interface Props {
 export const Header = (props: Props) => {
   return (
     <header>
-      <div className="flex flex-col mt-8 gap-4 justify-center  items-center">
+      <div className="flex flex-col mt-8 gap-4 justify-center  items-center font-press-start-2p">
         <h2 className="text-4xl max-w-[50%] text-white  font-press-start text-center">
           {props.title}
         </h2>
