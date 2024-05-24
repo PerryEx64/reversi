@@ -1,12 +1,5 @@
 import { useEffect, useState } from 'react';
-import type {
-  ModoDeJuego,
-  Score,
-  Spot,
-  SpotMaquina,
-  Tablero,
-  Turno
-} from '../types';
+import type { Score, Spot, Tablero, Turno } from '../types';
 import { initScore, TableroInicial } from '../init';
 import Swal from 'sweetalert2';
 import { Score as ScoreView } from './Score';
@@ -20,57 +13,15 @@ import {
   calculateAffectedRight,
   calculateAffectedUpLeft
 } from '../scripts/Movimientos';
-import { ObtenerMovimientoMaquina } from '../scripts/Maquina';
+import { useMaquina } from '../hook/useMaquina';
 
 export const TableroScreen = () => {
   const [turno, setTurno] = useState<Turno>('jugador');
   const [tablero, setTablero] = useState<Tablero>(TableroInicial);
   const [score, setScore] = useState<Score>(initScore);
-  const [modoDeJuego] = useState<ModoDeJuego>('normal');
-
+  useMaquina(turno, tablero, score, Turno);
   const numeroTurno = turno == 'jugador' ? 1 : 2;
 
-  useEffect(() => {
-    if (turno === 'maquina') {
-      setTimeout(() => {
-        const movimientos = ObtenerMovimientoMaquina(
-          modoDeJuego,
-          tablero,
-          turno == 'maquina' ? 2 : 1
-        );
-
-        const generarAleatoriamente = generarNumeroAleatorio(
-          movimientos.length - 1
-        );
-        const valorMasBajo: SpotMaquina = obtenerValorMasBajo(movimientos);
-
-        const result = movimientos[generarAleatoriamente];
-
-        Turno(
-          movimientos[generarAleatoriamente].row,
-          movimientos[generarAleatoriamente].column
-        );
-      }, 1500);
-    }
-  }, [turno]);
-
-  function obtenerValorMasBajo(movimientos: SpotMaquina[]): SpotMaquina {
-    if (movimientos.length === 0) {
-      void Swal.fire('Game Over', '', 'error');
-    }
-
-    let movimientoMasBajo = movimientos[0];
-    for (let i = 1; i < movimientos.length; i++) {
-      if (movimientos[i].affectedDisc < movimientoMasBajo.affectedDisc) {
-        movimientoMasBajo = movimientos[i];
-      }
-    }
-    return movimientoMasBajo;
-  }
-
-  function generarNumeroAleatorio(max: number) {
-    return Math.floor(Math.random() * (max - 1 + 1)) + 1;
-  }
   function clickedSquare(row: number, column: number) {
     if (turno === 'jugador') {
       return Turno(row, column);

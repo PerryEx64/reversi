@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MainContext } from '../context';
+import { Dificultad, MainContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 
 interface IModal {
@@ -67,15 +67,24 @@ export const ModalInitialGame = (props: IModal) => {
                 Nivel de Dificultas
               </label>
               <select
-                onChange={(e) => setDificultad(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value as Dificultad;
+                  if (
+                    value === 'Principiante' ||
+                    value === 'Normal' ||
+                    value === 'Avanzado'
+                  ) {
+                    setDificultad(value);
+                  } else {
+                    setDificultad('Normal');
+                  }
+                }}
                 className="select select-bordered select-sm text-sm w-full max-w-xs font-prosto-one [&>option]:text-sm [&>option]:font-prosto-one "
               >
-                <option disabled defaultValue={'defaultValue'}>
-                  Selecciona Dificultad
-                </option>
-                <option>Principiante</option>
-                <option>Normal</option>
-                <option>Avanzado</option>
+                <option disabled>Selecciona Dificultad</option>
+                <option value={'Principian'}>Principiante</option>
+                <option value={'Normal'}>Normal</option>
+                <option value={'Avanzado'}>Avanzado</option>
               </select>
             </div>
             <a
