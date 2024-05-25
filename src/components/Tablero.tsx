@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import type { Score, Spot, Tablero, Turno } from '../types';
-import { initScore, TableroInicial } from '../init';
+import { useContext, useEffect, useState } from 'react';
+import type { Score, Spot, Turno } from '../types';
+import { initScore } from '../init';
 import Swal from 'sweetalert2';
 import { Score as ScoreView } from './Score';
 import {
@@ -14,11 +14,14 @@ import {
   calculateAffectedUpLeft
 } from '../scripts/Movimientos';
 import { useMaquina } from '../hook/useMaquina';
+import { MainContext } from '../context';
+import { useTablero } from '../hook/useTablero';
 
 export const TableroScreen = () => {
   const [turno, setTurno] = useState<Turno>('jugador');
-  const [tablero, setTablero] = useState<Tablero>(TableroInicial);
+  const { sizeTablero } = useContext(MainContext);
   const [score, setScore] = useState<Score>(initScore);
+  const { tablero, setTablero } = useTablero(sizeTablero);
   useMaquina(turno, tablero, score, Turno);
   const numeroTurno = turno == 'jugador' ? 1 : 2;
 
@@ -58,12 +61,14 @@ export const TableroScreen = () => {
   }
 
   function getAffectedDiscs(id: number, row: number, column: number): Spot[] {
-    const calculateLeft = calculateAffectedLeft(tablero, row, column, id);
+    const size = sizeTablero - 1
+    const calculateLeft = calculateAffectedLeft(tablero, row, column, id,size);
     const calculateDownRight = calculateAffectedDownRight(
       tablero,
       row,
       column,
-      id
+      id,
+      size
     );
 
     /**
@@ -81,7 +86,8 @@ export const TableroScreen = () => {
       tablero,
       row,
       column,
-      id
+      id,
+      size
     );
 
     //Calculate de forma diagonal (Hacia abajo y hacia la izquierda) y Horizontal (Derecha)
@@ -90,7 +96,7 @@ export const TableroScreen = () => {
     }
 
     const calculateUpLeft = calculateAffectedUpLeft(tablero, row, column, id);
-    const calculateUpRight = calculateAffectUpRight(tablero, row, column, id);
+    const calculateUpRight = calculateAffectUpRight(tablero, row, column, id, size);
 
     if (calculateRight.length > 0 && calculateUpLeft.length > 0) {
       return calculateRight.concat(calculateUpLeft);
@@ -100,7 +106,7 @@ export const TableroScreen = () => {
       return calculateLeft.concat(calculateRight);
     }
 
-    const calculateBelow = calculateAffectedBelow(tablero, row, column, id);
+    const calculateBelow = calculateAffectedBelow(tablero, row, column, id, size);
 
     if (calculateRight.length > 0 && calculateBelow.length > 0) {
       return calculateRight.concat(calculateBelow);
@@ -153,8 +159,8 @@ export const TableroScreen = () => {
   }
 
   function canMove(id: 1 | 2) {
-    for (let row = 0; row < 6; row++) {
-      for (let column = 0; column < 6; column++) {
+    for (let row = 0; row < sizeTablero; row++) {
+      for (let column = 0; column < sizeTablero; column++) {
         if (canClickSpot(id, row, column)) {
           return true;
         }
@@ -165,7 +171,6 @@ export const TableroScreen = () => {
 
   useEffect(() => {
     if (score.vacios === 0) {
-      console.log('finalizacion del juego');
       void Swal.fire(
         'Juego Terminado',
         `${

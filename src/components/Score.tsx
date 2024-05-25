@@ -30,9 +30,7 @@ export const Score = ({ tablero, turno, score, setScore }: ScoreProps) => {
 
   useEffect(() => {
     handleScore();
-    console.log('fuera score', score.vacios);
     if (score.vacios === 0) {
-      console.log('dentro score', score.vacios);
       void Swal.fire(
         'Juego Terminado',
         `${

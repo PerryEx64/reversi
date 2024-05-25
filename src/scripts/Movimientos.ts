@@ -6,12 +6,13 @@ export const calculateAffectedLeft = (
     row: number,
     column: number,
     id: number,
+    size: number
   ): Spot[] => {
     let affectedDiscsTest: Spot[] = [];
     const couldBeAffectedTest: Spot[] = [];
     let columIteratorTest: number = column;
   
-    while (columIteratorTest < 5) {
+    while (columIteratorTest < size) {
       columIteratorTest += 1;
       const valueAtSpot = tablero[row][columIteratorTest];
       if (valueAtSpot === 0 || valueAtSpot === id) {
@@ -60,12 +61,13 @@ export const calculateAffectedLeft = (
     row: number,
     column: number,
     id: number,
+    size: number
   ) => {
     let affectedDiscsBelow: Spot[] = [];
     const couldBeAffectedBelow: Spot[] = [];
     let rowIteratorBelow: number = row;
   
-    while (rowIteratorBelow < 5) {
+    while (rowIteratorBelow < size) {
       rowIteratorBelow += 1;
       const valueAtSpot = tablero[rowIteratorBelow][column];
       if (valueAtSpot === 0 || valueAtSpot === id) {
@@ -114,13 +116,14 @@ export const calculateAffectedLeft = (
     row: number,
     column: number,
     id: number,
+    size: number
   ): Spot[] => {
     let affectedDiscsDR: Spot[] = [];
     const couldBeAffectedDR: Spot[] = [];
     let columIteratorDR: number = column;
     let rowIteratorDR: number = row;
   
-    while (columIteratorDR < 5 && rowIteratorDR < 5) {
+    while (columIteratorDR < size && rowIteratorDR < size) {
       columIteratorDR += 1;
       rowIteratorDR += 1;
       const valueAtSpot = tablero[rowIteratorDR][columIteratorDR];
@@ -146,6 +149,7 @@ export const calculateAffectedLeft = (
     row: number,
     column: number,
     id: number,
+    size: number
   ) => {
     //down left
     let affectedDiscsDL: Spot[] = [];
@@ -153,7 +157,7 @@ export const calculateAffectedLeft = (
     let columIteratorDL: number = column;
     let rowIteratorDL: number = row;
   
-    while (columIteratorDL > 0 && rowIteratorDL < 5) {
+    while (columIteratorDL > 0 && rowIteratorDL < size) {
       columIteratorDL -= 1;
       rowIteratorDL += 1;
       const valueAtSpot = tablero[rowIteratorDL][columIteratorDL];
@@ -179,13 +183,14 @@ export const calculateAffectedLeft = (
     row: number,
     column: number,
     id: number,
+    size: number
   ) => {
     let affectedDiscsUR: Spot[] = [];
     const couldBeAffectedUR: Spot[] = [];
     let columIteratorUR: number = column;
     let rowIteratorUR: number = row;
   
-    while (columIteratorUR < 5 && rowIteratorUR > 0) {
+    while (columIteratorUR < size && rowIteratorUR > 0) {
       columIteratorUR += 1;
       rowIteratorUR -= 1;
       const valueAtSpot = tablero[rowIteratorUR][columIteratorUR];

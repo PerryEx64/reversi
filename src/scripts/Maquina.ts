@@ -2,7 +2,7 @@ import { SpotMaquina, Tablero, Turno } from "../types";
 import { canClickSpot, getAffectedDiscs } from "./Tablero";
 
 
-export const ObtenerMovimientosPosibles = (turno: Turno, tablero: Tablero): SpotMaquina[] => {
+export const ObtenerMovimientosPosibles = (turno: Turno, tablero: Tablero, sizeTablero: number): SpotMaquina[] => {
 
   const numberTurno = turno == 'jugador' ? 1 : 2;
   const posicionFicha: SpotMaquina[] = [];
@@ -11,13 +11,14 @@ export const ObtenerMovimientosPosibles = (turno: Turno, tablero: Tablero): Spot
     for (let column = 0; column < tablero.length; column++) {
       if (
         tablero[row][column] == 0 &&
-        canClickSpot(numberTurno, row, column, tablero)
+        canClickSpot(numberTurno, row, column, tablero, sizeTablero)
       ) {
         const affectedDisc = getAffectedDiscs(
           numberTurno,
           row,
           column,
-          tablero
+          tablero,
+          sizeTablero
         );
         if (affectedDisc.length > 0) {
           posicionFicha.push({

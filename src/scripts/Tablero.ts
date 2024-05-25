@@ -2,19 +2,21 @@ import { Spot, Tablero } from "../types";
 import { calculateAffectedLeft, calculateAffectUpRight, calculateAffectedAbove,calculateAffectedBelow,calculateAffectedDownLeft,calculateAffectedDownRight,calculateAffectedRight,calculateAffectedUpLeft } from "./Movimientos";
 
 
-export function canClickSpot(id: number, row: number, column: number, tablero: Tablero): boolean {
-    const affectedDiscs: Spot[] = getAffectedDiscs(id, row, column, tablero);
+export function canClickSpot(id: number, row: number, column: number, tablero: Tablero, sizeTablero: number): boolean {
+    const affectedDiscs: Spot[] = getAffectedDiscs(id, row, column, tablero, sizeTablero);
     return affectedDiscs.length == 0 ? false : true;
   }
 
 
-  export function getAffectedDiscs(id: number, row: number, column: number, tablero: Tablero): Spot[] {
-    const calculateLeft = calculateAffectedLeft(tablero, row, column, id);
+  export function getAffectedDiscs(id: number, row: number, column: number, tablero: Tablero, sizeTablero: number): Spot[] {
+    const size = sizeTablero - 1
+    const calculateLeft = calculateAffectedLeft(tablero, row, column, id, size);
     const calculateDownRight = calculateAffectedDownRight(
       tablero,
       row,
       column,
       id,
+      size
     );
 
     /**
@@ -33,6 +35,7 @@ export function canClickSpot(id: number, row: number, column: number, tablero: T
       row,
       column,
       id,
+      size
     );
 
     //Calculate de forma diagonal (Hacia abajo y hacia la izquierda) y Horizontal (Derecha)
@@ -41,7 +44,7 @@ export function canClickSpot(id: number, row: number, column: number, tablero: T
     }
 
     const calculateUpLeft = calculateAffectedUpLeft(tablero, row, column, id);
-    const calculateUpRight = calculateAffectUpRight(tablero, row, column, id);
+    const calculateUpRight = calculateAffectUpRight(tablero, row, column, id, size);
 
     if (calculateRight.length > 0 && calculateUpLeft.length > 0) {
       return calculateRight.concat(calculateUpLeft);
@@ -51,7 +54,7 @@ export function canClickSpot(id: number, row: number, column: number, tablero: T
       return calculateLeft.concat(calculateRight);
     }
 
-    const calculateBelow = calculateAffectedBelow(tablero, row, column, id);
+    const calculateBelow = calculateAffectedBelow(tablero, row, column, id, size);
 
     if (calculateRight.length > 0 && calculateBelow.length > 0) {
       return calculateRight.concat(calculateBelow);

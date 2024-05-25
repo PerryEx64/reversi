@@ -13,10 +13,14 @@ export const useMaquina = (
   score: Score,
   action: (row: number, column: number) => void
 ) => {
-  const { dificultad } = useContext(MainContext);
+  const { dificultad, sizeTablero } = useContext(MainContext);
 
   const principiante = useCallback(() => {
-    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
+    const posicionFicha = ObtenerMovimientosPosibles(
+      turno,
+      tablero,
+      sizeTablero
+    );
 
     //Si ya no hay mas posiciones para jugar se finaliza
     if (posicionFicha.length < 1) {
@@ -42,10 +46,14 @@ export const useMaquina = (
     //Ejecuto la accion para que la maquina pueda jugar
 
     action(posicionElegida.row, posicionElegida.column);
-  }, [tablero, turno, action, score]);
+  }, [tablero, turno, action, score, sizeTablero]);
 
   const normal = useCallback(() => {
-    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
+    const posicionFicha = ObtenerMovimientosPosibles(
+      turno,
+      tablero,
+      sizeTablero
+    );
 
     //Si ya no hay mas posiciones para jugar se finaliza
     if (posicionFicha.length < 1) {
@@ -66,10 +74,14 @@ export const useMaquina = (
 
     //Ejecuto la accion para que la maquina pueda jugar
     action(posicionElegida.row, posicionElegida.column);
-  }, [action, tablero, turno, score]);
+  }, [action, tablero, turno, score, sizeTablero]);
 
   const avanzado = useCallback(() => {
-    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
+    const posicionFicha = ObtenerMovimientosPosibles(
+      turno,
+      tablero,
+      sizeTablero
+    );
 
     //Si ya no hay mas posiciones para jugar se finaliza
     if (posicionFicha.length < 1) {
@@ -94,7 +106,7 @@ export const useMaquina = (
 
     //Ejecuto la accion para que la maquina pueda jugar
     action(posicionElegida.row, posicionElegida.column);
-  }, [action, tablero, turno, score]);
+  }, [action, tablero, turno, score, sizeTablero]);
 
   useEffect(() => {
     if (turno === 'maquina') {
