@@ -1,4 +1,4 @@
-import { IMainContext, MainContext } from './context';
+import { Dificultad, IMainContext, MainContext } from './context';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import { Home } from './pages/Home.tsx';
@@ -9,7 +9,7 @@ import { ReglasConsejos } from './pages/ReglasConsejos.tsx';
 export const App = () => {
   const [sizeTablero, setSizeTablero] = useState<number>(6);
   const [name, setName] = useState<string>('');
-  const [dificultad, setDificultad] = useState<string>('');
+  const [dificultad, setDificultad] = useState<Dificultad>('Normal');
   const values: IMainContext = {
     sizeTablero,
     setSizeTablero,
