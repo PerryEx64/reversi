@@ -1,7 +1,11 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { Score, SpotMaquina, Tablero, Turno } from '../types';
+import { Score, Tablero, Turno } from '../types';
 import { MainContext } from '../context';
-import { canClickSpot, getAffectedDiscs } from '../scripts/Tablero';
+import {
+  generarNumeroAleatorio,
+  ObtenerMovimientosPosibles
+} from '../scripts/Maquina';
+import Swal from 'sweetalert2';
 
 export const useMaquina = (
   turno: Turno,
@@ -12,50 +16,85 @@ export const useMaquina = (
   const { dificultad } = useContext(MainContext);
 
   const principiante = useCallback(() => {
-    const numberTurno = turno == 'jugador' ? 1 : 2;
-    const posicionFicha: SpotMaquina[] = [];
+    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
 
-    /**
-     * Obtiene las fichas donde puede la maquina pponer
-     */
-    for (let row = 0; row < tablero.length; row++) {
-      for (let column = 0; column < tablero.length; column++) {
-        if (
-          tablero[row][column] == 0 &&
-          canClickSpot(numberTurno, row, column, tablero)
-        ) {
-          const affectedDisc = getAffectedDiscs(
-            numberTurno,
-            row,
-            column,
-            tablero
-          );
-          if (affectedDisc.length > 0) {
-            posicionFicha.push({
-              row,
-              column,
-              affectedDisc: affectedDisc.length
-            });
-          }
-        }
-      }
+    //Si ya no hay mas posiciones para jugar se finaliza
+    if (posicionFicha.length < 1) {
+      return void Swal.fire(
+        'Juego Terminado',
+        `${
+          score.humano > score.maquina
+            ? 'El Humano ah conquistado a la maquina'
+            : score.humano === score.maquina
+            ? 'Esto es un empate'
+            : 'La Maquina conquisto al humano'
+        }`,
+        'success'
+      );
     }
 
-    /**
-     * Obtengo el valor minimo o el que tenga menos ganancia
-     */
-
+    //Obtengo el valor minimo o el que tenga menos ganancia
     const affectedDiscs = posicionFicha.map((item) => item.affectedDisc);
     const minAffectedDisc = Math.min(...affectedDiscs);
     const minIndex = affectedDiscs.indexOf(minAffectedDisc);
     const posicionElegida = posicionFicha[minIndex];
-    /**
-     * Ejecuto la accion para que la maquina pueda jugar
-     */
+
+    //Ejecuto la accion para que la maquina pueda jugar
+
     action(posicionElegida.row, posicionElegida.column);
-  }, [tablero, turno, action]);
-  const normal = useCallback(() => {}, []);
-  const avanzado = useCallback(() => {}, []);
+  }, [tablero, turno, action, score]);
+
+  const normal = useCallback(() => {
+    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
+
+    //Si ya no hay mas posiciones para jugar se finaliza
+    if (posicionFicha.length < 1) {
+      return void Swal.fire(
+        'Juego Terminado',
+        `${
+          score.humano > score.maquina
+            ? 'El Humano ah conquistado a la maquina'
+            : score.humano === score.maquina
+            ? 'Esto es un empate'
+            : 'La Maquina conquisto al humano'
+        }`,
+        'success'
+      );
+    }
+    const numeroAleatorio = generarNumeroAleatorio(0, posicionFicha.length - 1);
+    const posicionElegida = posicionFicha[numeroAleatorio];
+
+    //Ejecuto la accion para que la maquina pueda jugar
+    action(posicionElegida.row, posicionElegida.column);
+  }, [action, tablero, turno, score]);
+
+  const avanzado = useCallback(() => {
+    const posicionFicha = ObtenerMovimientosPosibles(turno, tablero);
+
+    //Si ya no hay mas posiciones para jugar se finaliza
+    if (posicionFicha.length < 1) {
+      return void Swal.fire(
+        'Juego Terminado',
+        `${
+          score.humano > score.maquina
+            ? 'El Humano ah conquistado a la maquina'
+            : score.humano === score.maquina
+            ? 'Esto es un empate'
+            : 'La Maquina conquisto al humano'
+        }`,
+        'success'
+      );
+    }
+
+    //Obtengo el valor maximo o el que tenga mas ganancia
+    const affectedDiscs = posicionFicha.map((item) => item.affectedDisc);
+    const maxAffectedDisc = Math.max(...affectedDiscs);
+    const minIndex = affectedDiscs.indexOf(maxAffectedDisc);
+    const posicionElegida = posicionFicha[minIndex];
+
+    //Ejecuto la accion para que la maquina pueda jugar
+    action(posicionElegida.row, posicionElegida.column);
+  }, [action, tablero, turno, score]);
 
   useEffect(() => {
     if (turno === 'maquina') {
