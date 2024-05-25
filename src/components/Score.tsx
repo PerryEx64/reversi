@@ -47,7 +47,6 @@ export const Score = ({ tablero, turno, score, setScore }: ScoreProps) => {
     <div className="w-5/12 [&>div]:font-prosto-one [&>div]:text-sm">
       <div className="stats shadow ">
         <div className="stat place-items-center">
-          <div>{score.vacios}</div>
           <div className="stat-title">Mi Punteo</div>
           <div
             className={`stat-value ${

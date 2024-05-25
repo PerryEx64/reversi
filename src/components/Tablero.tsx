@@ -207,7 +207,7 @@ export const TableroScreen = () => {
           setScore={setScore}
         />
 
-        <div className="flex flex-col items-center gap-2 justify-center mt-16">
+        <div className={`flex flex-col items-center gap-2 justify-center ${sizeTablero == 10 && 'mt-[-36px]'} `}>
           {tablero.map((row, irow) => (
             <div key={irow} className="flex gap-2">
               {row.map((column, icolumn) => (
