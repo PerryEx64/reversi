@@ -16,6 +16,8 @@ import {
 import { useMaquina } from '../hook/useMaquina';
 import { MainContext } from '../context';
 import { useTablero } from '../hook/useTablero';
+import { useNavigate } from 'react-router-dom';
+import { useReset } from '../hook/useReset';
 
 export const TableroScreen = () => {
   const [turno, setTurno] = useState<Turno>('jugador');
@@ -24,6 +26,8 @@ export const TableroScreen = () => {
   const { tablero, setTablero } = useTablero(sizeTablero);
   useMaquina(turno, tablero, score, Turno);
   const numeroTurno = turno == 'jugador' ? 1 : 2;
+  const navigate = useNavigate();
+  const { reset } = useReset();
 
   function clickedSquare(row: number, column: number) {
     if (turno === 'jugador') {
@@ -51,7 +55,23 @@ export const TableroScreen = () => {
         Swal.fire('Juego Finaizado', '', 'success');
       }
     } else {
-      return;
+      return void Swal.fire({
+        title: 'Juego Terminado',
+        text: `${
+          score.humano > score.maquina
+            ? 'El Humano ah conquistado a la maquina'
+            : score.humano === score.maquina
+            ? 'Esto es un empate'
+            : 'La Maquina conquisto al humano'
+        }`,
+        confirmButtonText: 'Finalizar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/');
+          reset();
+          Swal.fire('Gracias por Jugar!', '', 'success');
+        }
+      });
     }
   }
 
@@ -61,8 +81,8 @@ export const TableroScreen = () => {
   }
 
   function getAffectedDiscs(id: number, row: number, column: number): Spot[] {
-    const size = sizeTablero - 1
-    const calculateLeft = calculateAffectedLeft(tablero, row, column, id,size);
+    const size = sizeTablero - 1;
+    const calculateLeft = calculateAffectedLeft(tablero, row, column, id, size);
     const calculateDownRight = calculateAffectedDownRight(
       tablero,
       row,
@@ -96,17 +116,30 @@ export const TableroScreen = () => {
     }
 
     const calculateUpLeft = calculateAffectedUpLeft(tablero, row, column, id);
-    const calculateUpRight = calculateAffectUpRight(tablero, row, column, id, size);
+    const calculateUpRight = calculateAffectUpRight(
+      tablero,
+      row,
+      column,
+      id,
+      size
+    );
 
     if (calculateRight.length > 0 && calculateUpLeft.length > 0) {
       return calculateRight.concat(calculateUpLeft);
     }
 
+
     if (calculateLeft.length > 0 && calculateRight.length > 0) {
       return calculateLeft.concat(calculateRight);
     }
 
-    const calculateBelow = calculateAffectedBelow(tablero, row, column, id, size);
+    const calculateBelow = calculateAffectedBelow(
+      tablero,
+      row,
+      column,
+      id,
+      size
+    );
 
     if (calculateRight.length > 0 && calculateBelow.length > 0) {
       return calculateRight.concat(calculateBelow);
@@ -171,17 +204,23 @@ export const TableroScreen = () => {
 
   useEffect(() => {
     if (score.vacios === 0) {
-      void Swal.fire(
-        'Juego Terminado',
-        `${
+      return void Swal.fire({
+        title: 'Juego Terminado',
+        text: `${
           score.humano > score.maquina
             ? 'El Humano ah conquistado a la maquina'
             : score.humano === score.maquina
             ? 'Esto es un empate'
             : 'La Maquina conquisto al humano'
         }`,
-        'success'
-      );
+        confirmButtonText: 'Finalizar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/');
+          reset();
+          Swal.fire('Gracias por Jugar!', '', 'success');
+        }
+      });
     }
   }, [score]);
 
@@ -207,7 +246,11 @@ export const TableroScreen = () => {
           setScore={setScore}
         />
 
-        <div className={`flex flex-col items-center gap-2 justify-center ${sizeTablero == 10 && 'mt-[-36px]'} `}>
+        <div
+          className={`flex flex-col items-center gap-2 justify-center ${
+            sizeTablero == 10 && 'mt-[-36px]'
+          } `}
+        >
           {tablero.map((row, irow) => (
             <div key={irow} className="flex gap-2">
               {row.map((column, icolumn) => (
@@ -272,10 +315,10 @@ export const Ficha = (props: IFicha) => {
       <div className="relative">
         <div
           id={'vacio'}
-          className={'flex bg-consejoHumano w-12 h-12 rounded-full shadow-md'}
+          className={'flex bg-[#000000] w-12 h-12 rounded-full shadow-md'}
         />
         <div
-          className="absolute left-4 right-0 top-3 bottom-0 text-[#002E7A]"
+          className="absolute left-5 font-prosto-one  right-0 top-3 bottom-0 text-[#ffffff]"
           onClick={onClick}
         >
           {afectados}
@@ -287,14 +330,12 @@ export const Ficha = (props: IFicha) => {
       <div className="relative">
         <div
           id={'vacio'}
-          className={'flex bg-consejoMaquina w-12 h-12 rounded-full shadow-md'}
-        >
+          className={'flex bg-[#000000] w-12 h-12 rounded-full shadow-md'}
+        > 
           <div
-            className="absolute left-4 right-0 top-3 bottom-0 text-[#7A092E]"
+            className="absolute left-4 right-0 top-3 bottom-0 text-[#ffffff]"
             onClick={onClick}
-          >
-            {afectados}
-          </div>
+          ></div>
         </div>
       </div>
     );

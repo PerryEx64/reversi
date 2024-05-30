@@ -6,6 +6,8 @@ import {
   ObtenerMovimientosPosibles
 } from '../scripts/Maquina';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import { useReset } from './useReset';
 
 export const useMaquina = (
   turno: Turno,
@@ -14,7 +16,8 @@ export const useMaquina = (
   action: (row: number, column: number) => void
 ) => {
   const { dificultad, sizeTablero } = useContext(MainContext);
-
+  const navigate = useNavigate()
+  const { reset } = useReset()
   const principiante = useCallback(() => {
     const posicionFicha = ObtenerMovimientosPosibles(
       turno,
@@ -24,17 +27,23 @@ export const useMaquina = (
 
     //Si ya no hay mas posiciones para jugar se finaliza
     if (posicionFicha.length < 1) {
-      return void Swal.fire(
-        'Juego Terminado',
-        `${
+      return void Swal.fire({
+        title: 'Juego Terminado',
+        text: `${
           score.humano > score.maquina
             ? 'El Humano ah conquistado a la maquina'
             : score.humano === score.maquina
             ? 'Esto es un empate'
             : 'La Maquina conquisto al humano'
         }`,
-        'success'
-      );
+        confirmButtonText: 'Finalizar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/');
+          reset()
+          Swal.fire('Gracias por Jugar!', '', 'success');
+        }
+      });
     }
 
     //Obtengo el valor minimo o el que tenga menos ganancia
@@ -121,7 +130,7 @@ export const useMaquina = (
         } else {
           return avanzado();
         }
-      }, 1500);
+      }, 500);
     }
   }, [turno]);
 };
