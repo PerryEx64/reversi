@@ -15,6 +15,7 @@ const Back: React.FC<Props> = ({ size = 24, color = '#ffffff' }) => (
     fill="none"
     strokeLinecap="round"
     strokeLinejoin="round"
+    className='max-sm:w-6 max-sm:h-6'
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
     <path d="M11 7l-5 5l5 5"></path>

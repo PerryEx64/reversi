@@ -1,14 +1,31 @@
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
+import Back from '../components/Back';
 
 export const ReglasConsejos = () => {
+  const navigate = useNavigate();
   return (
     <div>
-      <Header
-        title="Reglas y Consejos"
-        subTitle="¡Presta mucha atencion si quieres ganar!"
-      />
-
-      <div className="flex justify-center items-center mt-5"></div>
+      <section className='flex justify-between w-[95%] ml-auto mr-auto items-center'>
+        <div className="flex justify-center mt-[-25px]">
+          <a
+            onClick={() => {
+              navigate('/');
+            }}
+            href={'/'}
+            role="button"
+            className="btn btn-outline p-3 btn-info font-prosto-one"
+          >
+            <Back />
+          </a>
+        </div>
+         <Header
+          title="Reglas y Consejos"
+          subTitle="¡Presta mucha atencion si quieres ganar!"
+        />
+        <div />
+      </section>
+      <div className="flex justify-center items-center"></div>
       <section className="w-9/12 my-5 justify-center items-center ml-auto mr-auto">
         <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
           <li>

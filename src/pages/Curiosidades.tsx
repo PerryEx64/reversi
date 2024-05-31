@@ -1,22 +1,42 @@
+import { useNavigate } from 'react-router-dom';
+import Back from '../components/Back';
 import { Header } from '../components/Header';
 
 export const Curiosidades = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <Header title="Curiosidades" subTitle="¡Aprende mas sobre reversi!" />
+      <section className="flex justify-between w-[95%] ml-auto mr-auto items-center">
+        <div className="flex justify-center">
+          <a
+            onClick={() => {
+              navigate('/');
+            }}
+            href={'/'}
+            role="button"
+            className="btn btn-outline p-3 btn-info font-prosto-one"
+          >
+            <Back />
+          </a>
+        </div>
+        <Header title="Curiosidades" subTitle="¡Aprende mas sobre reversi!" />
+        <div />
+      </section>
 
       <div className="flex justify-center items-center mt-5"></div>
 
-      <section className="flex flex-col justify-center items-center mt-16 mb-5">
-        <h2 className="text-2xl text-center text-secondary mb-8">Tablero</h2>
-        <div className="stats shadow [&>div]:font-prosto-one">
+      <section className="flex flex-col justify-center items-center m-5 max-sm:m-1">
+        <h2 className="text-2xl max-sm:text-lg text-center text-secondary mb-8 max-sm:m-1">
+          Tablero
+        </h2>
+        <div className="stats shadow max-sm:flex max-sm:flex-col max-sm:gap-2 [&>div]:font-prosto-one">
           <div className="stat">
             <div className="stat-figure text-secondary">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="inline-block w-8 h-8 stroke-current"
+                className="inline-block w-8 h-8 max-sm:w-6 max-sm:h-6 stroke-current"
               >
                 <path
                   strokeLinecap="round"
@@ -26,8 +46,8 @@ export const Curiosidades = () => {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title">Partida mas corta</div>
-            <div className="stat-value">9</div>
+            <div className="stat-title max-sm:text-lg">Partida mas corta</div>
+            <div className="stat-value max-sm:text-2xl ">9</div>
             <div className="stat-desc">movimientos</div>
           </div>
 
@@ -37,7 +57,7 @@ export const Curiosidades = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="inline-block w-8 h-8 stroke-current"
+                className="inline-block w-8 h-8 max-sm:w-6 max-sm:h-6 stroke-current"
               >
                 <path
                   strokeLinecap="round"
@@ -47,8 +67,8 @@ export const Curiosidades = () => {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title">Partida mas larga</div>
-            <div className="stat-value">58</div>
+            <div className="stat-title max-sm:text-lg">Partida mas larga</div>
+            <div className="stat-value max-sm:text-2xl">58</div>
             <div className="stat-desc">movimientos (en un tablero de 8*8)</div>
           </div>
 
@@ -58,7 +78,7 @@ export const Curiosidades = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="inline-block w-8 h-8 stroke-current"
+                className="inline-block w-8 h-8 max-sm:w-6 max-sm:h-6 stroke-current"
               >
                 <path
                   strokeLinecap="round"
@@ -68,8 +88,10 @@ export const Curiosidades = () => {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title">Quien puede ganar mas rapido</div>
-            <div className="stat-value">Blancas</div>
+            <div className="stat-title max-sm:text-lg">
+              Quien puede ganar mas rapido
+            </div>
+            <div className="stat-value max-sm:text-2xl">Blancas</div>
             <div className="stat-desc">
               Determinado por quien inicia la partida
             </div>
@@ -78,8 +100,10 @@ export const Curiosidades = () => {
       </section>
       <div className="divider ml-auto mr-auto w-4/5 m-0"></div>
       <section className="flex flex-col justify-center items-center mb-8 mt-5">
-        <h2 className="text-2xl text-center text-primary mb-8">Historia</h2>
-        <ul className="timeline">
+        <h2 className="text-2xl text-center text-primary max-sm:text-lg max-sm:mb-4 mb-8">
+          Historia
+        </h2>
+        <ul className="timeline max-md:timeline-vertical  ">
           <li>
             <div className="timeline-start font-prosto-one">1880</div>
             <div className="timeline-middle">

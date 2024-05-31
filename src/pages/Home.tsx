@@ -12,7 +12,7 @@ export const Home = () => {
     />
     <ModalInitialGame id="play" label="Ver aquí" />
 
-    <section className="flex grow gro gap-3 mt-8">
+    <section className="flex grow  gap-3 mt-8">
       <CardIniciales />
     </section>
   </main>

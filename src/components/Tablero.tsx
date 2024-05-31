@@ -225,7 +225,7 @@ export const TableroScreen = () => {
   }, [score]);
 
   return (
-    <div>
+    <div >
       <div className="ml-5">
         <div className="flex gap-2 aling-center">
           <h4 className=" font-prosto-one">Turno de:</h4>
@@ -247,7 +247,7 @@ export const TableroScreen = () => {
         />
 
         <div
-          className={`flex flex-col items-center gap-2 justify-center ${
+          className={`flex flex-col items-center gap-2 max-lg:mt-8 justify-center ${
             sizeTablero == 10 && 'mt-[-36px]'
           } `}
         >

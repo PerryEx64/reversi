@@ -11,8 +11,8 @@ export const TitleGame = () => {
 
   return (
     <>
-      <header className="flex justify-between w-[80%] ml-auto mr-auto items-center">
-        <div className="flex justify-center my-5">
+      <header className="flex justify-between w-[80%] ml-auto mr-auto my-5 items-center">
+        <div className="flex justify-center mt-[-30px]">
           <a
             onClick={() => {
               navigate('/');
@@ -27,9 +27,11 @@ export const TitleGame = () => {
         </div>
         <div className="flex flex-col mt-5 gap-6 justify-center items-center">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Juega con nosotros</h2>
+            <h2 className="text-3xl max-sm:text-xl font-bold mb-4">
+              Juega con nosotros
+            </h2>
             <div className="flex gap-3 justify-center items-center">
-              <h2 className="text-2xl font-prosto-one">Bienvenido:</h2>
+              <h2 className="text-2xl font-prosto-one">Jugador:</h2>
               <h3 className="text-2xl font-prosto-one text-indigo-600">
                 {name}
               </h3>
