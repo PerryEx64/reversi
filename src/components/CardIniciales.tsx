@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 export const CardIniciales = () => {
   const navigate = useNavigate();
   return (
-    <div className="grid grid-cols-2 max-md:grid-cols-1 max-md:mb-5 justify-center md:gap-16 max-md:gap-8 items-center ml-auto mr-auto w-full">
+    <div className="max-md:grid  max-md:grid-cols-1 flex max-lg:px-5  max-md:mb-5 justify-center gap-16 max-lg:gap-5  max-md:gap-8 items-center ml-auto mr-auto w-full">
       <div className="card w-96 max-md:w-80 max-md:ml-auto max-md:mr-auto  bg-base-100 shadow-xl image-full">
         <figure>
           <img src="./reversi.png" alt="Shoes" />
