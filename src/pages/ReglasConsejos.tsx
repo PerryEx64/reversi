@@ -12,7 +12,6 @@ export const ReglasConsejos = () => {
             onClick={() => {
               navigate('/');
             }}
-            href={'/'}
             role="button"
             className="btn btn-outline p-3 btn-info font-prosto-one"
           >
