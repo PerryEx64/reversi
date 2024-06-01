@@ -128,7 +128,6 @@ export const TableroScreen = () => {
       return calculateRight.concat(calculateUpLeft);
     }
 
-
     if (calculateLeft.length > 0 && calculateRight.length > 0) {
       return calculateLeft.concat(calculateRight);
     }
@@ -225,7 +224,7 @@ export const TableroScreen = () => {
   }, [score]);
 
   return (
-    <div >
+    <div>
       <div className="ml-5">
         <div className="flex gap-2 aling-center">
           <h4 className=" font-prosto-one">Turno de:</h4>
@@ -305,7 +304,6 @@ export const Ficha = (props: IFicha) => {
       <div
         id={'vacio'}
         className={'flex bg-quieta w-12 h-12 rounded-full shadow-md'}
-        onClick={onClick}
       />
     );
   }
@@ -331,7 +329,7 @@ export const Ficha = (props: IFicha) => {
         <div
           id={'vacio'}
           className={'flex bg-[#000000] w-12 h-12 rounded-full shadow-md'}
-        > 
+        >
           <div
             className="absolute left-4 right-0 top-3 bottom-0 text-[#ffffff]"
             onClick={onClick}
